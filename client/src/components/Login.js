@@ -1,25 +1,36 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 
 class Login extends React.Component {
   state = {
     credentials: {
-      username: '',
-      password: ''
-    }
+      username: "",
+      password: "",
+    },
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({
       credentials: {
         ...this.state.credentials,
-        [e.target.name]: e.target.value
-      }
+        [e.target.name]: e.target.value,
+      },
     });
   };
 
-  login = e => {
+  login = (e) => {
     e.preventDefault();
+    console.log("Login!! ");
+    // 1. use axios to make post request
+    axios
+      .post("http://localhost:5000/api/login", this.state.credentials)
+      // 2. if request is successful, log token
+      .then((res) => {
+        localStorage.setItem("token", res.data.token);
+        this.props.history.push("/protected");
+      })
+      // 3. if request is error, log error
+      .catch((err) => console.log(err));
   };
 
   render() {
