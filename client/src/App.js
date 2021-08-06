@@ -15,6 +15,7 @@ function App() {
       .then((res) => {
         localStorage.removeItem("token");
         console.log(window.location);
+        window.location.href = "/login";
       })
       .catch((err) => console.log(err));
   };
