@@ -8,7 +8,14 @@ import axios from "axios";
 
 function App() {
   const logout = () => {
-    console.log("Log me out");
+    axios
+      .post("http://localhost:5000/api/logout", {
+        headers: { authorization: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
