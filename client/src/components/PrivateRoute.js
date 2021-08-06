@@ -7,8 +7,19 @@ import { Route, Redirect } from "react-router-dom";
 // 2. check to see if we are logged in, if yes, render component
 // 3. if the user is not logged in , redirect login
 
-const PrivateRoute = (props) => {
-  return <Route {...props} />;
+const PrivateRoute = ({ component: Component, ...rest }) => {
+  return (
+    <Route
+      {...rest}
+      render={(props) => {
+        if (localStorage.getItem("token")) {
+          return <Component {...props} />;
+        } else {
+          return <Redirect to="/login" />;
+        }
+      }}
+    />
+  );
 };
 
 export default PrivateRoute;
