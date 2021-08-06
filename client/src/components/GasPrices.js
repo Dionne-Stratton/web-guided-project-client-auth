@@ -14,7 +14,11 @@ class GasPrices extends React.Component {
 
   getData = () => {
     axios
-      .get("http://localhost:5000/api/data")
+      .get("http://localhost:5000/api/data", {
+        headers: {
+          authorization: localStorage.getItem("token"),
+        },
+      })
       .then((res) => {
         console.log(res);
       })
