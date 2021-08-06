@@ -13,8 +13,8 @@ function App() {
         headers: { authorization: localStorage.getItem("token") },
       })
       .then((res) => {
-        console.log(res);
         localStorage.removeItem("token");
+        console.log(window.location);
       })
       .catch((err) => console.log(err));
   };
