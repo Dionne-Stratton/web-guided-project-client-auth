@@ -23,7 +23,7 @@ class Login extends React.Component {
     console.log("Login!! ");
     // 1. use axios to make post request
     axios
-      .post("http://localhost:5000/api/login", this.state.credentials)
+      .post("/login", this.state.credentials)
       // 2. if request is successful, log token
       .then((res) => {
         localStorage.setItem("token", res.data.token);
