@@ -1,5 +1,5 @@
 import React from "react";
-import axios from "axios";
+import { axiosWithAuth } from "../utils/axiosWithAuth";
 
 class Login extends React.Component {
   state = {
@@ -22,7 +22,7 @@ class Login extends React.Component {
     e.preventDefault();
     console.log("Login!! ");
     // 1. use axios to make post request
-    axios
+    axiosWithAuth()
       .post("/login", this.state.credentials)
       // 2. if request is successful, log token
       .then((res) => {
