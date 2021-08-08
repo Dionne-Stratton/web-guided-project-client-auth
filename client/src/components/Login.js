@@ -26,6 +26,7 @@ class Login extends React.Component {
       console.log(req)
       localStorage.setItem("token", req.data.token); // receives token from server and sets it to localStorage to be read by restricted pages before granting access to restricted data. "data.token" comes from the stucture of the server which may vary.
       this.props.history.push("/protected"); // after setting token, routes user to specified page "protected" in this case
+      this.props.setIsLoggedIn(true);
     })
     .catch( err => {
       console.log(err)

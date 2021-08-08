@@ -1,7 +1,9 @@
 import React from 'react';
 import moment from 'moment';
 import Loader from 'react-loader-spinner';
-import axios from 'axios';
+// import axios from 'axios'; not needed because it is being used in axiosWithAuth
+import {axiosWithAuth} from './../utils/axiosWithAuth';
+
 
 class GasPrices extends React.Component {
   state = {
@@ -13,15 +15,25 @@ class GasPrices extends React.Component {
   }
 
   getData = () => {
-    axios.get("http://localhost:5000/api/data", {
-      headers: {
-        authorization: localStorage.getItem("token")
-      }
-    }).then(req => {
-      console.log(req)
-    }).catch(err => {
-      console.log(err)
-    })
+    axiosWithAuth()
+      .get("/data")
+        // because of baseURL in axiosWithAuth, we only need the last part of the api call here
+
+        //this headers element is no longer needed because it is being done in the axiosWithAuth call
+        // {headers: {
+          // authorization: localStorage.getItem("token"), // sends the stored token to the server to be checked against it's records to get verified
+      //   },
+      // })
+
+      .then((req) => {
+        console.log(req);
+        this.setState({
+          gasPrices: req.data.data, // once token is verified, sets the data recieved from server into state replacing the empty placeholder array seen on line 8
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   formatData = () => {
@@ -76,7 +88,7 @@ class GasPrices extends React.Component {
                 <div className="year">2012</div>
               </div>
               <div>
-                {gasPrices.map(price => (
+                {gasPrices.map(price => ( // maps over the array set by the getData function see line 15
                   <div key={price.id} className="price-graph">
                     <div className="date">
                       <p>{price.date}</p>
